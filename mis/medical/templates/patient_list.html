@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Список пациентов</h2>
+<ul>
+    {% for patient in patients %}
+    <li><a href="{% url 'patient_detail' patient.id %}">{{ patient.full_name }}</a></li>
+    {% empty %}
+    <li>Нет доступных пациентов</li>
+    {% endfor %}
+</ul>
+{% endblock %}

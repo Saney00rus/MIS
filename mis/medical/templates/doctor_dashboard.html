@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if is_doctor %}
+<h2>Панель врача</h2>
+<p>Добро пожаловать, {{ doctor.first_name }} {{ doctor.middle_name }}!</p>
+<h3>Ваше расписание на {{ today_date }}</h3>
+<div class="calendar">
+  <div class="date_but">
+    <!-- Переключение на предыдущий день -->
+    <a href="{% url 'doctor_dashboard_with_date' date=previous_date %}">&lt;&lt; Предыдущий день</a>
+    <!-- Переключение на следующий день -->
+    <a href="{% url 'doctor_dashboard_with_date' date=next_date %}">Следующий день &gt;&gt;</a>
+  </div>
+  {% if appointments %}
+  {% for appointment in appointments %}
+  {% if appointment.patient_id is not None %}
+  <div class="appointment has-appointment">
+    <p>{{ appointment.time }} - <a href="{% url 'patient_detail' appointment.patient_id_id %}">{{ appointment.patient_id
+      }}</a></p>
+  </div>
+  {% else %}
+  <div class="appointment">
+    <p>{{ appointment.time }} - свободно</p>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+</div>
+{% endif %}
+
+{% if is_medregistrator %}
+
+<h2>Панель медрегистратора</h2>
+<p>Добро пожаловать, {{ doctor.first_name }} {{ doctor.middle_name }}!</p>
+{% csrf_token %}
+<h3>Список врачей:</h3>
+<ul>
+  {% for doc in doctors %}
+  <li><a href="{% url 'doctor_schedule_settings' doctor_id=doc.id %}">{{ doc.last_name }} {{ doc.first_name }}</a></li>
+  {% empty %}
+  <li>Нет доступных врачей</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Запись к врачу: {{ doctor.last_name }} {{ doctor.first_name }} {{ doctor.middle_name }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Выбрать">
+</form>
+
+{% if selected_date %}
+{% if time_slots %}
+<h3>{{ selected_date }}</h3>
+<ul>
+    {% for time_slot in time_slots %}
+    {% if time_slot.is_available is True %}
+    <li class="available"><a class="available"
+                             href="{% url 'confirm_appointment' patient_id=patient.id doctor_id=doctor.id %}?date={{ selected_date }}&time={{ time_slot.time }}">{{
+        time_slot.time }}</a></li>
+    {% else %}
+    <li class="unavailable">{{ time_slot.time }}</li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% else %}
+<p>Нет доступных временных слотов на эту дату</p>
+{% endif %}
+{% endif %}
+{% endblock %}

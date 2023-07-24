@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>МИС</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="user-info">
+    {% if user.is_authenticated %}
+    <span>{{ user.doctor.first_name }} {{ user.doctor.last_name }}</span>
+    <a href="{% url 'doctor_logout' %}">Выход</a>
+    {% endif %}
+</div>
+
+<header>
+    <h1>МИС ФГБУ "12 КДЦ" МИНОБОРОНЫ РОССИИ</h1>
+</header>
+
+<nav>
+    <ul>
+        {% if user.is_authenticated %}
+        <li><a href="/doctor-dashboard">Главная</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li><a href="/patients/">Пациенты</a></li>
+        {% endif %}
+        {% if is_medregistrator %}
+        <li><a href="/patients/add/">Добавить пациента</a></li>
+        <li><a href="/search-patient/">Записать пациента</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        {% endif %}
+    </ul>
+</nav>
+
+<main>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+<footer>
+    <p>Все права защищены &copy; 2023 МИС</p>
+</footer>
+</body>
+</html>

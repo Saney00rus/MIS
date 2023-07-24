@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Подтверждение записи к врачу</h2>
+<p><strong>Пациент:</strong> {{ patient.full_name }}</p>
+<p><strong>Дата рождения:</strong> {{ patient.birth_date }}</p>
+<p><strong>{{ doctor.specialization }}:</strong> {{ doctor.first_name }} {{ doctor.last_name }}</p>
+<p><strong>Время записи:</strong> {{ selected_date }} - {{ selected_time }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Подтвердить запись">
+</form>
+{% endblock %}

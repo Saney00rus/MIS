@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Поиск пациента</h2>
+<form method="POST" action="{% url 'search_patient' %}">
+    {% csrf_token %}
+    <input type="text" name="search_query" placeholder="Введите фамилию пациента">
+    <button type="submit">Найти</button>
+</form>
+
+<ul>
+    {% for patient in patients %}
+    <li><a href="{% url 'patient_profile' patient_id=patient.id %}">{{ patient.full_name }}</a></li>
+    {% empty %}
+    <li>Нет доступных пациентов</li>
+    {% endfor %}
+</ul>
+{% endblock %}

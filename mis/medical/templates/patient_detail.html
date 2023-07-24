@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="patient-card">
+    <h2 class="patient-name">Медицинская карта пациента: {{ patient.full_name }}</h2>
+
+    <div class="section">
+        <h3 class="section-title">Идентификационные данные:</h3>
+        <ul class="patient-details">
+            <li><b>Пол:</b> {{ patient.gender }}</li>
+            <li><b>Дата рождения:</b> {{ patient.birth_date }}</li>
+            <li><b>Номер полиса:</b> {{ patient.insurance_number }}</li>
+            <li><b>Номер СНИЛС:</b> {{ patient.snils_number }}</li>
+            <li><b>Воинское звание:</b> {{ patient.military_rank }}</li>
+            <li><b>Адрес проживания:</b> {{ patient.address }}</li>
+            <li><b>Контактный номер:</b> {{ patient.contact_number }}</li>
+            <li><b>Эл. почта:</b> {{ patient.email }}</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3 class="section-title">Медицинская история:</h3>
+        <p class="patient-medical-history">{{ patient.medical_history }}</p>
+        <p><b>Хронические заболевания:</b></p>
+        <p class="patient-chronic-conditions">{{ patient.chronic_conditions }}</p>
+        <p><b>История операций и процедур:</b></p>
+        <p class="patient-surgeries">{{ patient.surgeries }}</p>
+        <p><b>Аллергии:</b></p>
+        <p class="patient-allergies">{{ patient.allergies }}</p>
+        <p><b>Результаты медицинских обследований:</b></p>
+        <p class="patient-medical-tests">{{ patient.medical_tests }}</p>
+        <p><b>Рецепты и назначения лекарств:</b></p>
+        <p class="patient-prescriptions">{{ patient.prescriptions }}</p>
+    </div>
+
+    <div class="section">
+        <h3 class="section-title">Посещения медицинских учреждений:</h3>
+        <ul class="patient-visits">
+            {% for visit in patient.visits.all %}
+            <li><b>Дата посещения:</b> {{ visit.visit_date }}</li>
+            <li><b>Врач:</b> {{ visit.doctor }}</li>
+            <li><b>Диагноз:</b> {{ visit.diagnosis }}</li>
+            <li><b>План лечения и рекомендации:</b> {{ visit.treatment_plan }}</li>
+            {% empty %}
+            <li>Нет информации о посещениях</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3 class="section-title">Иммунизация и вакцинация:</h3>
+        <ul class="patient-vaccinations">
+            {% for vaccination in patient.vaccinations.all %}
+            <li><b>Прививка:</b> {{ vaccination.vaccine }}</li>
+            <li><b>Дата вакцинации:</b> {{ vaccination.vaccination_date }}</li>
+            {% empty %}
+            <li>Нет информации о вакцинации</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if is_medregistrator %}
+    <div class="buttons-container">
+        <a class="edit-patient" href="{% url 'edit_patient' patient_id=patient.id %}">Редактировать</a>
+        <form action="{% url 'delete_patient' patient.id %}" method="POST" class="delete-patient">
+            {% csrf_token %}
+            <input type="submit" value="Удалить">
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

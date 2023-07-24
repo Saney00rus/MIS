@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Карточка пациента</h2>
+<p>ФИО: {{ patient.full_name }}</p>
+<p>Дата рождения: {{ patient.birth_date }}</p>
+<p>Звание: {{ patient.military_rank }}</p>
+
+
+{% csrf_token %}
+<label for="doctor"><b>Выберите врача:</b></label>
+<ul>
+    {% for doctor in doctors %}
+    <li><a href="{% url 'doctor_schedule' patient_id=patient.id doctor_id=doctor.id%}">{{ doctor.last_name }} {{
+        doctor.first_name}}</a></li>
+    {% empty %}
+    <li>Нет доступных врачей</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

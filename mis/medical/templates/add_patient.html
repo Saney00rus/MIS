@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Добавить пациента</h2>
+
+<form method="post" class="patient-form">
+    {% csrf_token %}
+
+    <div class="form-section">
+        <label for="{{ form.full_name.id_for_label }}">ФИО:</label>
+        {{ form.full_name }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.gender.id_for_label }}">Пол:</label>
+        {{ form.gender }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.birth_date.id_for_label }}">Дата рождения:</label>
+        {{ form.birth_date }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.insurance_number.id_for_label }}">Номер полиса:</label>
+        {{ form.insurance_number }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.snils_number.id_for_label }}">Номер СНИЛС:</label>
+        {{ form.snils_number }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.military_rank.id_for_label }}">Воинское звание:</label>
+        {{ form.military_rank }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.address.id_for_label }}">Адрес проживания:</label>
+        {{ form.address }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.contact_number.id_for_label }}">Контактный номер:</label>
+        {{ form.contact_number }}
+    </div>
+
+    <div class="form-section">
+        <label for="{{ form.email.id_for_label }}">Эл. почта:</label>
+        {{ form.email }}
+    </div>
+
+    <div class="form-section textarea-section">
+        <label for="{{ form.medical_history.id_for_label }}">Анамнез заболеваний:</label>
+        {{ form.medical_history }}
+    </div>
+
+    <div class="form-section textarea-section">
+        <label for="{{ form.chronic_conditions.id_for_label }}">Хронические заболевания:</label>
+        {{ form.chronic_conditions }}
+    </div>
+
+    <div class="form-section textarea-section">
+        <label for="{{ form.surgeries.id_for_label }}">История операций и процедур:</label>
+        {{ form.surgeries }}
+    </div>
+
+    <div class="form-section textarea-section">
+        <label for="{{ form.allergies.id_for_label }}">Аллергические реакции и непереносимость лекарств:</label>
+        {{ form.allergies }}
+    </div>
+
+    <div class="form-section textarea-section">
+        <label for="{{ form.medical_tests.id_for_label }}">Результаты медицинских обследований:</label>
+        {{ form.medical_tests }}
+    </div>
+
+    <div class="form-section textarea-section">
+        <label for="{{ form.prescriptions.id_for_label }}">Рецепты и назначения лекарств:</label>
+        {{ form.prescriptions }}
+    </div>
+
+    <div class="button-container">
+        <button type="submit" class="btn-save">Сохранить</button>
+    </div>
+</form>
+{% endblock %}
