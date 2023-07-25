@@ -17,7 +17,7 @@
   {% if appointment.patient_id is not None %}
   <div class="appointment has-appointment">
     <p>{{ appointment.time }} - <a href="{% url 'patient_detail' appointment.patient_id_id %}">{{ appointment.patient_id
-      }}</a></p>
+        }}</a></p>
   </div>
   {% else %}
   <div class="appointment">
